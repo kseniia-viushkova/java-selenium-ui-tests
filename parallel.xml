@@ -4,6 +4,10 @@
 
 <suite name="CoffeeCartSuite" thread-count="3" parallel="tests">
 
+    <listeners>
+        <listener class-name="listeners.ReportingListener"/>
+    </listeners>
+
     <test name="ChromeTest">
         <parameter name="browser" value="chrome"/>
         <classes>
