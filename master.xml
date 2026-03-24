@@ -10,7 +10,8 @@
 
     <test name="BasicTests">
         <classes>
-            <class name="testCases.BasicTest"/>
+            <class name="testCases.MenuTest"/>
+            <class name="testCases.CartTest"/>
         </classes>
     </test>
 

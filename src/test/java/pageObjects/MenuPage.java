@@ -18,24 +18,15 @@ public class MenuPage extends BasePage {
     @FindBy(css = "ul .cup")
     List<WebElement> coffeeCups;
 
-    @FindBy(css = "a[href=\"/cart\"]")
-    WebElement cartLink;
-
     @FindBy(className = "pay")
     WebElement total;
 
-    public float get_nth_coffee_item_price(int cupNumber) {
+    public float getNthCoffeeItemPrice(int cupNumber) {
         return Float.parseFloat(coffeePrices.get(cupNumber).getText().replace("$", ""));
     }
 
-    public void click_on_nth_cup(int cupNumber) {
+    public void clickOnNthCup(int cupNumber) {
         coffeeCups.get(cupNumber).click();
-    }
-
-    public int getCartCounter() {
-        String counterText = cartLink.getText();
-        return Integer.parseInt(
-                counterText.substring(counterText.indexOf("(") + 1, counterText.indexOf(")")));
     }
 
     public float getTotalValue() {

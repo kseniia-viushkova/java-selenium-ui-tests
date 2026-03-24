@@ -1,16 +1,27 @@
 package testCases;
 
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import pageObjects.HeaderPage;
 import pageObjects.MenuPage;
 import testBase.BaseTest;
 
 import static org.testng.Assert.assertEquals;
 
-public class BasicTest extends BaseTest {
+public class MenuTest extends BaseTest {
+
+    private HeaderPage headerPage;
+    private MenuPage menuPage;
+
+    @BeforeClass
+    public void setPages() {
+        headerPage = new HeaderPage(driver);
+        menuPage = new MenuPage(driver);
+    }
 
     @Test(priority = 1)
     public void testPageTitleAndUrl() {
-        String expectedUrl = "https://coffee-cart.app/";
+        String expectedUrl = properties.getProperty("baseUrl");
         String actualUrl = driver.getCurrentUrl();
         String expectedTitle = "Coffee cart";
         String actualTitle = driver.getTitle();
@@ -21,21 +32,18 @@ public class BasicTest extends BaseTest {
 
     @Test(priority = 2)
     public void testCartIsEmptyOnPageLoad() {
-        MenuPage menuPage = new MenuPage(driver);
-
-        assertEquals(menuPage.getCartCounter(), 0, "Cart counter is unexpected");
+        assertEquals(headerPage.getCartCounter(), 0, "Cart counter is unexpected");
         assertEquals(menuPage.getTotalValue(), 0.0, 0.001, "Total value is unexpected");
     }
 
     @Test(priority = 3)
     public void testAddingOneCoffeeToCart() {
         int cupNumber = 0;
-        MenuPage menuPage = new MenuPage(driver);
-        float coffee_price = menuPage.get_nth_coffee_item_price(cupNumber);
+        float coffee_price = menuPage.getNthCoffeeItemPrice(cupNumber);
 
-        menuPage.click_on_nth_cup(cupNumber);
+        menuPage.clickOnNthCup(cupNumber);
 
-        assertEquals(menuPage.getCartCounter(), 1, "Cart counter is unexpected");
+        assertEquals(headerPage.getCartCounter(), 1, "Cart counter is unexpected");
         assertEquals(menuPage.getTotalValue(), coffee_price, 0.001, "Total value is unexpected");
     }
 
